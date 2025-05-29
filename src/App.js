@@ -23,13 +23,17 @@ export function App() {
   const [trackIndex, setTrackIndex] = useState(0);
   const [playing, setPlaying] = useState(false);
 
-  const [playlist, setPlaylist] = useState(["/audio/aud1.mp3"])
+  const [playlist, setPlaylist] = useState(["./any/fon.mp3"])
   const [text, setText] = useState([])
   const [imgs, setImgs] = useState([])
 
   const [cntRand, setCntRand] = useState(0)
 
   const handleEnd = () => {
+    if(cnt === text.length) {
+      setPlaying(false)
+      return
+    }
     setCnt((prevCnt) => {
       const newCnt = prevCnt + 1;
       return newCnt;
@@ -49,7 +53,7 @@ export function App() {
 
     setImgs([...imgs])
     setText([...text])
-    setPlaylist([...audio])
+    setPlaylist(() => ["./audio/fon.mp3", ...audio, "./audio/fon.mp3"])
   }, [])
 
   function startApp() {

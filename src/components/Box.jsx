@@ -39,7 +39,7 @@ export function Box({ level = 0, text, cntBoxs, children, img }) {
         {children}
       </div>
       <div className="box-into" style={{borderColor: getDimmedColor(cntBoxs - level - 1)}}>
-        <p className="text" style={getTextStyle(cntBoxs - level - 1, text.length)}>
+        <p className="text" style={getTextStyle(cntBoxs - level - 1, text?.length)}>
           {text}
         </p>
       </div>

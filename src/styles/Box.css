@@ -42,10 +42,11 @@
 
 .moving-box {
   position: absolute;
-  width: 20px; /* Ширина красного квадрата */
-  height: 20px; /* Высота красного квадрата */
+  width: 10px; /* Ширина красного квадрата */
+  height: 10px; /* Высота красного квадрата */
   background-color: red; /* Цвет красного квадрата */
   animation: move 4s linear infinite; /* Анимация */
+  border-radius: 50%;
 }
 
 @keyframes move {
@@ -55,14 +56,14 @@
   }
   25% {
     top: 0;
-    left: calc(100% - 20px); /* Двигаемся вправо */
+    left: calc(100% - 10px); /* Двигаемся вправо */
   }
   50% {
-    top: calc(100% - 20px); /* Двигаемся вниз */
-    left: calc(100% - 20px);
+    top: calc(100% - 10px); /* Двигаемся вниз */
+    left: calc(100% - 10px);
   }
   75% {
-    top: calc(100% - 20px); /* Двигаемся влево */
+    top: calc(100% - 10px); /* Двигаемся влево */
     left: 0;
   }
   100% {
