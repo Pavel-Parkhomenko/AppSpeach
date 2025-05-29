@@ -2,19 +2,19 @@ import React from "react";
 import "../styles/Box.css";
 
 const getBoxStyle = (level) => ({
-  width: `${600 - level * 60}px`,
-  height: `${600 - level * 114}px`,
+  width: `${400 - level * 60}px`,
+  height: `${400 - level * 114}px`,
   borderColor: getDimmedColor(level),
 });
 
-const getImg = (level, img) => ({
-  backgroundImage: `url(${level < 4 ? img : ""})`,
+const getImg = (img) => ({
+  backgroundImage: `url(${img || ""})`,
   backgroundSize: 'cover',
   backgroundPosition: 'center',
 })
 
-const getTextStyle = (level) => ({
-  fontSize: `${24 - level * 3}px`,
+const getTextStyle = (level, length) => ({
+  fontSize: `${Math.max(18, 40 - level * 5 - length * 1)}px`,
   color: getDimmedColor(level),
 });
 
@@ -34,12 +34,12 @@ const getDimmedColor = (level) => {
 export function Box({ level = 0, text, cntBoxs, children, img }) {
   return (
     <div style={getBoxStyle(cntBoxs - level - 1)}>
-      <div className="box-main" style={getImg(cntBoxs - level - 1, img)}>
+      <div className="box-main" style={getImg(img)}>
         {children}
       </div>
       <div className="box-into">
-        <p className="text" style={getTextStyle(cntBoxs - level - 1)}>
-          {text + "" + (cntBoxs - level - 1)}
+        <p className="text" style={getTextStyle(cntBoxs - level - 1, text.length)}>
+          {text}
         </p>
       </div>
     </div>

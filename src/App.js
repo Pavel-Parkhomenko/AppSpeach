@@ -83,14 +83,14 @@ export function App() {
     }
   }, [cnt]);
 
-  function addBox(currentLevel) {    
+  function addBox(currentLevel) {   
     if (currentLevel === 0) {
       return (
         <Box
           level={currentLevel}
           cntBoxs={boxs.length}
           text={boxs[currentLevel].text}
-          img={boxs[currentLevel].img}
+          img={imgs[cnt]}
         />
       );
     }
@@ -100,7 +100,7 @@ export function App() {
         level={currentLevel}
         cntBoxs={boxs.length}
         text={boxs[currentLevel].text}
-        img={boxs[currentLevel].img}
+        img={""}
       >
         {addBox(currentLevel - 1)}
       </Box>
