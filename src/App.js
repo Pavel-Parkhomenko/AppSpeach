@@ -10,7 +10,7 @@ export function App() {
     {
       level: 0,
       text: "????",
-      img: 0,
+      img: "",
     },
   ]);
 
@@ -61,7 +61,7 @@ export function App() {
   useEffect(() => {
     if (cnt > 0) {
       setBoxs(prev => {
-        if(prev.length % 3 == 0) {
+        if(prev.length % 4 == 0) {
           setCntRand(getRandom())
           return [{
             level: cntRepeat,
@@ -90,6 +90,7 @@ export function App() {
           level={currentLevel}
           cntBoxs={boxs.length}
           text={boxs[currentLevel].text}
+          img={boxs[currentLevel].img}
         />
       );
     }
@@ -99,6 +100,7 @@ export function App() {
         level={currentLevel}
         cntBoxs={boxs.length}
         text={boxs[currentLevel].text}
+        img={boxs[currentLevel].img}
       >
         {addBox(currentLevel - 1)}
       </Box>

@@ -7,6 +7,12 @@ const getBoxStyle = (level) => ({
   borderColor: getDimmedColor(level),
 });
 
+const getImg = (level, img) => ({
+  backgroundImage: `url(${level < 4 ? img : ""})`,
+  backgroundSize: 'cover',
+  backgroundPosition: 'center',
+})
+
 const getTextStyle = (level) => ({
   fontSize: `${24 - level * 3}px`,
   color: getDimmedColor(level),
@@ -25,13 +31,15 @@ const getDimmedColor = (level) => {
   return `rgb(${r}, ${g}, ${b})`;
 };
 
-export function Box({ level = 0, text, cntBoxs, children }) {
+export function Box({ level = 0, text, cntBoxs, children, img }) {
   return (
-    <div className="box-main" style={getBoxStyle(cntBoxs - level - 1)}>
-      {children}
+    <div style={getBoxStyle(cntBoxs - level - 1)}>
+      <div className="box-main" style={getImg(cntBoxs - level - 1, img)}>
+        {children}
+      </div>
       <div className="box-into">
         <p className="text" style={getTextStyle(cntBoxs - level - 1)}>
-          {text}
+          {text + "" + (cntBoxs - level - 1)}
         </p>
       </div>
     </div>
