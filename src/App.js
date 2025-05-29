@@ -30,7 +30,7 @@ export function App() {
   const [cntRand, setCntRand] = useState(0)
 
   const handleEnd = () => {
-    if(cnt === text.length) {
+    if(cnt === text.length + 1) {
       setPlaying(false)
       return
     }
@@ -123,7 +123,7 @@ export function App() {
       </div>
       {addBox(boxs.length - 1)}
       <button onClick={() => startApp()} style={{ marginTop: "300px" }}>
-        Добавить вложенный Box {playing ? "yes" : "no"}
+        Start {playing ? "yes" : "no"}
       </button>
     </div>
   );
