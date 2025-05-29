@@ -1,0 +1,32 @@
+.box-into {
+  border-top: 5px solid rgb(148, 145, 145);
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  box-sizing: border-box;
+  height: 64px;
+  padding: 0;
+  margin: 0;
+}
+
+.text {
+  white-space: wrap;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: rgb(226, 217, 217);
+  font-size: 24px;
+}
+
+.box-main {
+  border: 5px solid rgb(148, 145, 145);
+  border-radius: 5px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin-top: 26px;
+}
