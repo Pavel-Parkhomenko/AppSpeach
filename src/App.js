@@ -118,7 +118,7 @@ export function App() {
       />
       </div>
       {addBox(boxs.length - 1)}
-      <button onClick={() => startApp()} style={{ marginTop: "100px" }}>
+      <button onClick={() => startApp()} style={{ marginTop: "300px" }}>
         Добавить вложенный Box {playing ? "yes" : "no"}
       </button>
     </div>
