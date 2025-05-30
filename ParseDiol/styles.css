@@ -1,0 +1,21 @@
+html, body {
+    background-color: black;
+    color: white;
+    width: 100vh;
+    height: 100vh;
+    padding-left: 30px;
+    padding-top: 20px;
+}
+
+.man-1 {
+    text-decoration: underline;
+    color: #ebd3d3;
+}
+
+.was-copy {
+    color: #476b43;
+}
+
+p {
+    cursor: pointer;
+}
