@@ -78,4 +78,28 @@ document.querySelector('.btn-img').addEventListener('click', async (event) => {
   }
 })
 
+document.querySelector('.btn-aud').addEventListener('click', async (event) => {
+
+  try {
+    const response = await fetch('http://localhost:3000/action-aud', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({})
+    });
+
+    const res = await response.json();
+    if (!response.ok) {
+      throw new Error(`${res.error}. status: ${response.status}`);
+    }
+    else {
+      console.log(res.message)
+    }
+  } 
+  catch (error) {
+    console.error('(I) ', error);
+  }
+})
+
 readTxtFile()

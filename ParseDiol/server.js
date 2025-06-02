@@ -49,14 +49,14 @@ function saveJson(data, namesImg) {
     const filename = "data.json"
 
 		for(let i = 0; i < data.text.length; i++) {
-			data.imgs.push("/imgs/" + namesImg[i])
+			data.imgs.push("/img/" + namesImg[i])
 		}
 
     if (!data) {
         return res.status(400).send('Данные отсуствуют!');
     }
 
-    const filePath = path.join(__dirname, filename);
+    const filePath = path.join(__dirname, ".." , "public/", filename);
 
     fs.writeFile(filePath, JSON.stringify(data, null, 2), (err) => {
         if (err) {
@@ -68,7 +68,7 @@ function saveJson(data, namesImg) {
 
 app.post("/action-img", (req, res) => {
   const SOURCE_DIR = path.join(__dirname, "/source-img");
-  const TARGET_DIR = path.join(__dirname, '/target-img')
+  const TARGET_DIR = path.join(__dirname, "..", 'public/img')
 
   if(!fs.existsSync(SOURCE_DIR)) {
     return res.status(400).json({
@@ -114,6 +114,49 @@ app.post("/action-img", (req, res) => {
 
   res.json({
     message: "Картинки успешно сформированны!",
+	})
+})
+
+app.post("/action-aud", (req, res) => {
+  const SOURCE_DIR = path.join(__dirname, "/source-aud");
+  const TARGET_DIR = path.join(__dirname, "..", 'public/audio')
+
+  if(!fs.existsSync(SOURCE_DIR)) {
+    return res.status(400).json({
+      error: `Папка ${SOURCE_DIR} не существует`
+    })
+  }
+
+	if(fs.existsSync(TARGET_DIR)) {
+		fs.rmSync(TARGET_DIR, { recursive: true, force: true }, (err) => {
+			if (err) return console.error(err);
+		})
+
+		console.log('Папка и все ее содержимое успешно удалены!');
+		fs.mkdirSync(TARGET_DIR)
+
+	} else {
+		fs.mkdirSync(TARGET_DIR)
+	}
+
+  const files = fs.readdirSync(SOURCE_DIR)
+    .filter(file => /\.(mp3)$/i.test(file))
+
+
+  if(files.length === 0) {
+    return res.json({message: 'Нет аудио для обработки'})
+  }
+
+  files.forEach((file, index) => {
+    const ext = path.extname(file);
+    const newName = `${index}${ext}`;
+    const sourcePath = path.join(SOURCE_DIR, file);
+    const targetPath = path.join(TARGET_DIR, newName);
+    fs.copyFileSync(sourcePath, targetPath);
+	});
+
+  res.json({
+    message: "Аудио успешно сформированны!",
 	})
 })
 

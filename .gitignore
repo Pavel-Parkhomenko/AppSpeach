@@ -6,9 +6,10 @@
 .pnp.js
 /ParseDiol/data.txt
 /ParseDiol/data.json
-/ParseDiol/target-img
 /ParseDiol/source-img
 /ParseDiol/source-aud
+/public/img
+/public/audio
 
 # testing
 /coverage
