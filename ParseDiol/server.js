@@ -1,3 +1,5 @@
+const { parseTxtFile, getRandom } = require('./services.js')
+
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
@@ -7,10 +9,18 @@ const PORT = 3000;
 
 app.use(express.json());
 
+let countUnit = 0
+
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*'); // Разрешаем все домены (*)
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
     res.header('Access-Control-Allow-Headers', 'Content-Type');
+
+    // Явно отвечаем на OPTIONS-запрос
+    if (req.method === 'OPTIONS') {
+        return res.sendStatus(200);
+    }
+
     next();
 });
 
@@ -25,12 +35,16 @@ app.get('/read-txt', (req, res) => {
         if (err) {
             return res.status(500).send('Ошибка чтения файла');
         }
-        res.type('text').send(data);
+        
+        const lines = data.split(/\r?\n/)
+        const jsonData = parseTxtFile(lines)
+        countUnit = jsonData.text.length
+        saveJson(jsonData)
+        res.type('json').send(JSON.stringify({text: jsonData.text}));
     });
 });
 
-app.post('/save-json', (req, res) => {
-    const data = req.body
+function saveJson(data) {
     const filename = "data.json"
 
     if (!data) {
@@ -41,52 +55,56 @@ app.post('/save-json', (req, res) => {
 
     fs.writeFile(filePath, JSON.stringify(data, null, 2), (err) => {
         if (err) {
-            return res.status(500).send('Ошибка записи файла');
+            console.log('Ошибка записи файла');
         }
-        res.send('Файл успешно сохранен!');
+        console.log('Файл успешно сохранен!');
     });
-});
-
-function getRandom(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  }
+}
 
 app.post("/action-img", (req, res) => {
-    const { folderPath, countUnit } = req.body
+  const SOURCE_DIR = path.join(__dirname, "/source-img");
+  const TARGET_DIR = path.join(__dirname, '/target-img')
 
-    const SOURCE_DIR = 'source_images';
-    const TARGET_DIR = 'processed_images';
-
-    if(fs.existsSync(SOURCE_DIR)) {
-        return res.status(400).json({
-            error: `Папка ${SOURCE_DIR} не существует`
-        })
-    }
-
-    if(fs.existsSync(TARGET_DIR)) {
-        fs.mkdirSync(TARGET_DIR)
-    }
-
-    const files = fs.readFileSync(SOURCE_DIR)
-        .filter(file => /\.(jpg|jpeg|png|gif)$/i.test(file))
-
-    if(files.length === 0) {
-        return res.json({message: 'Нет изображений для обработки'})
-    }
-
-    let randIndexImgs = []
-    for(let i = 0; i < countUnit; i++) {
-        randIndexImgs.push(getRandom(0, files.length - 1))
-    }
-
-    randIndexImgs.map((unit, ind) => {
-        const ext = path.extname(files[unit])
-        const newName = `${ind}`
-        const sourcePath = path.join(SOURCE_DIR, files[ind])
-        
+  if(!fs.existsSync(SOURCE_DIR)) {
+    return res.status(400).json({
+      error: `Папка ${SOURCE_DIR} не существует`
     })
+  }
+
+	if(fs.existsSync(TARGET_DIR)) {
+		fs.rmSync(TARGET_DIR, { recursive: true, force: true }, (err) => {
+			if (err) {
+					return console.error(err);
+			}
+			console.log('Папка и все ее содержимое успешно удалены!');
+		});
+		fs.mkdirSync(TARGET_DIR)
+	} else {
+		fs.mkdirSync(TARGET_DIR)
+	}
+
+  const files = fs.readdirSync(SOURCE_DIR)
+    .filter(file => /\.(jpg|jpeg|png|gif)$/i.test(file))
+
+
+  if(files.length === 0) {
+    return res.json({message: 'Нет изображений для обработки'})
+  }
+
+	const shuffledFiles = [...files].sort(() => Math.random() - 0.5);
+	const selectedFiles = shuffledFiles.slice(0, countUnit);
+
+  selectedFiles.forEach((file, index) => {
+    const ext = path.extname(file);
+    const newName = `${index}${ext}`;
+    const sourcePath = path.join(SOURCE_DIR, file);
+    const targetPath = path.join(TARGET_DIR, newName);
+    fs.copyFileSync(sourcePath, targetPath);
+	});
+
+  res.json({
+    message: "Картинки успешно сформированны!",
+	})
 })
 
 // Запуск сервера

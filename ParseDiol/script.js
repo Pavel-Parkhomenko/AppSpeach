@@ -10,59 +10,9 @@ function readTxtFile() {
         return response.text();
     })
     .then(text => {
-      const lines = text.split(/\r?\n/)
-      parseTxtFile(lines)
+      showDataToHtml(JSON.parse(text))
     })
     .catch(error => console.error('Ошибка:', error));
-}
-
-function isLetter(char) {
-  return /^[a-zA-Zа-яА-ЯёЁ!?.,)(*:;]$/.test(char);
-}
-
-function trimUntilLetter(str) {
-  for (let i = 0; i < str.length; i++) {
-    if (isLetter(str[i])) {
-      return str.slice(i);
-    }
-  }
-  return '';
-}
-
-function writeJSONToFile(jsonData) {
-
-  fetch('http://localhost:3000/save-json', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(jsonData),
-})
-.then(response => response.text())
-.then(data => console.log(data))
-.catch(error => console.error('Ошибка:', error));
-}
-
-function parseTxtFile(lines) {
-    let jsonData = {
-      text: [],
-      imgs: [],
-      audio: []
-    }
-
-    let ind = 0
-    for(let i = 0; i < lines.length; i++) {
-        if(lines[i].length === 0) continue
-
-        jsonData.text.push(trimUntilLetter(lines[i]))
-        jsonData.imgs.push(`./img/${ind}.jpg`)
-        jsonData.audio.push(`./audio/${ind}.mp3`)
-
-        ind++
-    }
-
-    writeJSONToFile(jsonData)
-    showDataToHtml(jsonData)
 }
 
 function showDataToHtml(jsonData) {
@@ -103,5 +53,29 @@ function copyText(box) {
     }
   })
 }
+
+document.querySelector('.btn-img').addEventListener('click', async (event) => {
+
+  try {
+    const response = await fetch('http://localhost:3000/action-img', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({})
+    });
+
+    const res = await response.json();
+    if (!response.ok) {
+      throw new Error(`${res.error}. status: ${response.status}`);
+    }
+    else {
+      console.log(res.message)
+    }
+  } 
+  catch (error) {
+    console.error('(I) ', error);
+  }
+})
 
 readTxtFile()
