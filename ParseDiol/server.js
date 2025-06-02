@@ -10,6 +10,7 @@ const PORT = 3000;
 app.use(express.json());
 
 let countUnit = 0
+let jsonDataForImg = {}
 
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*'); // Разрешаем все домены (*)
@@ -38,14 +39,18 @@ app.get('/read-txt', (req, res) => {
         
         const lines = data.split(/\r?\n/)
         const jsonData = parseTxtFile(lines)
+				jsonDataForImg = jsonData
         countUnit = jsonData.text.length
-        saveJson(jsonData)
         res.type('json').send(JSON.stringify({text: jsonData.text}));
     });
 });
 
-function saveJson(data) {
+function saveJson(data, namesImg) {
     const filename = "data.json"
+
+		for(let i = 0; i < data.text.length; i++) {
+			data.imgs.push("/imgs/" + namesImg[i])
+		}
 
     if (!data) {
         return res.status(400).send('Данные отсуствуют!');
@@ -94,13 +99,18 @@ app.post("/action-img", (req, res) => {
 	const shuffledFiles = [...files].sort(() => Math.random() - 0.5);
 	const selectedFiles = shuffledFiles.slice(0, countUnit);
 
+	let namesImg = []
+
   selectedFiles.forEach((file, index) => {
     const ext = path.extname(file);
     const newName = `${index}${ext}`;
+		namesImg.push(newName)
     const sourcePath = path.join(SOURCE_DIR, file);
     const targetPath = path.join(TARGET_DIR, newName);
     fs.copyFileSync(sourcePath, targetPath);
 	});
+
+	saveJson(jsonDataForImg, namesImg)
 
   res.json({
     message: "Картинки успешно сформированны!",

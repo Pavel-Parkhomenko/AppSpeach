@@ -23,7 +23,6 @@ function parseTxtFile(lines) {
         if(lines[i].length === 0) continue
 
         jsonData.text.push(trimUntilLetter(lines[i]))
-        jsonData.imgs.push(`./img/${ind}.jpg`)
         jsonData.audio.push(`./audio/${ind}.mp3`)
 
         ind++
