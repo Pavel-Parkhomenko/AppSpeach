@@ -1,15 +1,16 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/node_modules
+/client/node_modules
+/server/node_modules
 /.pnp
 .pnp.js
-/ParseDiol/data.txt
-/ParseDiol/source-img/*
-/ParseDiol/source-aud/*
-/public/extr/audio/*
-/public/extr/img/*
-/src/extr/*
+/server/data.txt
+/server/source-img/*
+/server/source-aud/*
+/client/public/extr/audio/*
+/client/public/extr/img/*
+/client/src/extr/*
 
 # testing
 /coverage
