@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import "../styles/FitText.css"
 
-export function FitText({ children }) {
+export function FitText({ colorProp, children }) {
   const textRef = useRef(null);
 
   useEffect(() => {
@@ -9,15 +9,15 @@ export function FitText({ children }) {
 
     const fitty = require('fitty').default;
     const instance = fitty(textRef.current, {
-      maxSize: 24,
-      minSize: 12,
-      multiLine: true, // Включить перенос текста
+      maxSize: 28,
+      minSize: 14,
+      multiLine: true,
     });
 
     return () => instance.unsubscribe(); 
   }, [children]);
 
   return (
-    <span ref={textRef}>{children}</span>
+    <span style={{color: colorProp}} ref={textRef}>{children}</span>
   );
 }

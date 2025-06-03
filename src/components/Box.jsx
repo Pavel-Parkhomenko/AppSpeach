@@ -4,8 +4,8 @@ import "../styles/Box.css";
 import { FitText } from './FitText'
 
 const getBoxStyle = (level) => ({
-  width: `${400 - level * 60}px`,
-  height: `${400 - level * 114}px`,
+  width: `${500 - level * 55}px`,
+  height: `${500 - level * 100}px`,
 });
 
 const getImg = (level, img) => ({
@@ -14,15 +14,6 @@ const getImg = (level, img) => ({
   backgroundPosition: 'center',
   borderColor: getDimmedColor(level),
 })
-
-const minFontSize = 12;  // Минимальный размер
-const maxFontSize = 32;  // Максимальный размер
-const baseFontSize = 20; // Базовый размер
-
-const getTextStyle = (level, length) => ({
-  fontSize: "0.8rem",
-  color: getDimmedColor(level),
-});
 
 
 const getDimmedColor = (level) => {
@@ -54,7 +45,7 @@ export function Box({ level = 0, text, cntBoxs, children, img }) {
         {children}
       </div>
       <div className="box-into" style={getStyleBoxInto(cntBoxs - level - 1)}>
-        <FitText>
+        <FitText colorProp={getDimmedColor(cntBoxs - level - 1)}>
           {text}
         </FitText>
       </div>

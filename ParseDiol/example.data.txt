@@ -1,0 +1,3 @@
+Создайте в этой папке файл data.txt и скопируйте туда свой диалог.
+
+Create a file in this folder data.txt and copy your dialog there.
