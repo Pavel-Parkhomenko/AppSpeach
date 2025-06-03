@@ -3,6 +3,8 @@ import React, { useState, useEffect, useCallback } from "react";
 import dataJson from "../extr/data.json"
 import ReactHowler from "react-howler";
 
+import { preloadImages } from '../services/loadImgs.js';
+
 export function Speach() {
     const [cnt, setCnt] = useState(0);
     const [cntRepeat, setCntRepeat] = useState(0);
@@ -53,6 +55,8 @@ export function Speach() {
       let imgs = dataJson.imgs
       imgs = [...imgs, imgs[imgs.length - 1], imgs[imgs.length - 1]]
       const audio = dataJson.audio
+
+      preloadImages(imgs).catch(console.error);
   
       setImgs([...imgs])
       setText([...text])
@@ -115,7 +119,7 @@ export function Speach() {
     }
   
     return (
-      <div>
+      <div className="container">
         <div>
           <ReactHowler
             src={playlist[trackIndex]}

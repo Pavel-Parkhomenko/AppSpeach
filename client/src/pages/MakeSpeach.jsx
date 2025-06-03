@@ -98,9 +98,9 @@ export function MakeSpeach() {
     <div className="container">
         <h1>Speach</h1>
         <div className="btn-box">
-            <button className="btn-img" onClick={() => readTxtFile()}>TXT</button>
-            <button className="btn-img" onClick={() => clickBtnImg()}>IMG</button>
-            <button className="btn-aud" onClick={() => clickBtnAud()}>AUD</button>
+            <button className="btn-img"  onClick={() => readTxtFile()} type="button">TXT</button>
+            <button className="btn-img" onClick={() => clickBtnImg()} type="button">IMG</button>
+            <button className="btn-aud" onClick={() => clickBtnAud()} type="button">AUD</button>
         </div>
         {textArr.map((text, ind) => <div key={ind}>{text}</div>)}
     </div>

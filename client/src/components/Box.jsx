@@ -1,20 +1,35 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../styles/Box.css";
 
 import { FitText } from './FitText'
+
+import { getCachedImage } from '../services/loadImgs.js';
 
 const getBoxStyle = (level) => ({
   width: `${500 - level * 55}px`,
   height: `${500 - level * 100}px`,
 });
 
-const getImg = (level, img) => ({
-  backgroundImage: `url(${img || ""})`,
+// backgroundImage: `url(${img || ""})`,
+//backgroundImage: `url(${getCachedImage(img)?.src || ""})`,
+
+
+// const getImg = (level, img) => ({
+//   backgroundImage: `url(${getCachedImage(img)?.src || ""})`,
+//   backgroundSize: 'cover',
+//   backgroundPosition: 'center',
+//   borderColor: getDimmedColor(level),
+// })
+
+const getImg = (level, img) => {
+  console.log(getCachedImage(img)?.src)
+  return {
+  backgroundImage: `url(${getCachedImage(img)?.src || ""})`,
   backgroundSize: 'cover',
   backgroundPosition: 'center',
   borderColor: getDimmedColor(level),
-})
-
+  }
+}
 
 const getDimmedColor = (level) => {
   const baseR = 148;

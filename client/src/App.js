@@ -14,8 +14,8 @@ import "./styles/App.css"
 export function App() {
   return (
     <Router>
-       <div>
-        <ul className="container-app">
+       <div className="container-app">
+        <ul className="container-ul">
           <li>
             <Link to="/">Home</Link>
           </li>

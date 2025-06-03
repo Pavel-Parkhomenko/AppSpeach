@@ -20,7 +20,7 @@
   position: relative;
   display: flex;
   justify-content: center;
-  margin-top: 26px;
+  padding-top: 26px;
   box-sizing: border-box;
   width: 100%;
   height: 100%;
@@ -32,20 +32,20 @@
 
 .moving-box {
   position: absolute;
-  width: 10px; /* Ширина красного квадрата */
-  height: 10px; /* Высота красного квадрата */
-  background-color: red; /* Цвет красного квадрата */
-  animation: move 4s linear infinite; /* Анимация */
+  width: 10px;
+  height: 10px;
+  background-color: red;
+  animation: move 4s linear infinite;
   border-radius: 50%;
 }
 
 @keyframes move {
   0% {
-    top: 0;
-    left: 0;
+    top: 0px;
+    left: 0px;
   }
   25% {
-    top: 0;
+    top: 0px;
     left: calc(100% - 10px); /* Двигаемся вправо */
   }
   50% {
