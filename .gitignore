@@ -5,11 +5,10 @@
 /.pnp
 .pnp.js
 /ParseDiol/data.txt
-/ParseDiol/data.json
 /ParseDiol/source-img
 /ParseDiol/source-aud
-/public/img
-/public/audio
+/public/extr
+/src/extr
 
 # testing
 /coverage

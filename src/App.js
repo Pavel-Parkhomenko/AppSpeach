@@ -1,6 +1,6 @@
 import { Box } from "./components/Box";
-import React, { useState, useEffect } from "react";
-import dataJson from "./data.json"
+import React, { useState, useEffect, useCallback } from "react";
+import dataJson from "./extr/data.json"
 import ReactHowler from "react-howler";
 
 export function App() {
@@ -23,37 +23,40 @@ export function App() {
   const [trackIndex, setTrackIndex] = useState(0);
   const [playing, setPlaying] = useState(false);
 
-  const [playlist, setPlaylist] = useState(["./any/fon.mp3"])
+  const [playlist, setPlaylist] = useState(["/extr/fo0n.mp3"])
   const [text, setText] = useState([])
   const [imgs, setImgs] = useState([])
 
   const [cntRand, setCntRand] = useState(0)
 
-  const handleEnd = () => {
-    if(cnt === text.length + 1) {
-      setPlaying(false)
-      return
-    }
-    setCnt((prevCnt) => {
-      const newCnt = prevCnt + 1;
-      return newCnt;
-    });
-
-    if (trackIndex < playlist.length - 1) {
-      setTrackIndex(trackIndex + 1);
-    } else {
+  const handleEnd = useCallback(() => {  
+    if (cnt === text.length + 1) {
       setPlaying(false);
+      return;
     }
-  };
+  
+    setCnt(prev => prev + 1);
+  
+    setTrackIndex(prev => {
+      if (prev < playlist.length - 1) {
+        return prev + 1;
+      } else {
+        setPlaying(false);
+        return prev;
+      }
+    });
+  }, [text.length, playlist.length, cnt]); // Минимальные зависимости
 
   useEffect(() => {
-    const text = dataJson.text
-    const imgs = dataJson.imgs
+    let text = dataJson.text
+    text = [...text, "????"]
+    let imgs = dataJson.imgs
+    imgs = [...imgs, imgs[imgs.length - 1], imgs[imgs.length - 1]]
     const audio = dataJson.audio
 
     setImgs([...imgs])
     setText([...text])
-    setPlaylist(() => ["./audio/fon.mp3", ...audio, "./audio/fon.mp3"])
+    setPlaylist(() => ["/extr/fon.mp3", ...audio])
   }, [])
 
   function startApp() {
@@ -122,7 +125,7 @@ export function App() {
       />
       </div>
       {addBox(boxs.length - 1)}
-      <button onClick={() => startApp()} style={{ marginTop: "300px" }}>
+      <button onClick={() => startApp()} style={{ marginTop: "150px" }}>
         Start {playing ? "yes" : "no"}
       </button>
     </div>

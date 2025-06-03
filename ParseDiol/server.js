@@ -49,14 +49,14 @@ function saveJson(data, namesImg) {
     const filename = "data.json"
 
 		for(let i = 0; i < data.text.length; i++) {
-			data.imgs.push("/img/" + namesImg[i])
+			data.imgs.push("./extr/img/" + namesImg[i])
 		}
 
     if (!data) {
         return res.status(400).send('Данные отсуствуют!');
     }
 
-    const filePath = path.join(__dirname, ".." , "public/", filename);
+    const filePath = path.join(__dirname, ".." , "/src/extr/", filename);
 
     fs.writeFile(filePath, JSON.stringify(data, null, 2), (err) => {
         if (err) {
@@ -68,7 +68,7 @@ function saveJson(data, namesImg) {
 
 app.post("/action-img", (req, res) => {
   const SOURCE_DIR = path.join(__dirname, "/source-img");
-  const TARGET_DIR = path.join(__dirname, "..", 'public/img')
+  const TARGET_DIR = path.join(__dirname, "..", '/public/extr/img')
 
   if(!fs.existsSync(SOURCE_DIR)) {
     return res.status(400).json({
@@ -119,7 +119,7 @@ app.post("/action-img", (req, res) => {
 
 app.post("/action-aud", (req, res) => {
   const SOURCE_DIR = path.join(__dirname, "/source-aud");
-  const TARGET_DIR = path.join(__dirname, "..", 'public/audio')
+  const TARGET_DIR = path.join(__dirname, "..", './public/extr/audio')
 
   if(!fs.existsSync(SOURCE_DIR)) {
     return res.status(400).json({

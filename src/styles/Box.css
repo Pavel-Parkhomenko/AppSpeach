@@ -9,19 +9,9 @@
   padding: 0;
   margin: 0;
   /* border-radius: 5px; */
-}
-
-.text {
-  white-space: wrap;
-  margin: 0;
-  padding: 0;
-  text-align: center;
   display: flex;
-  align-items: center;
   justify-content: center;
-  height: 100%;
-  color: rgb(226, 217, 217);
-  font-size: 24px;
+  align-items: center;
 }
 
 .box-main {

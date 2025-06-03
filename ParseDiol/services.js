@@ -23,7 +23,7 @@ function parseTxtFile(lines) {
         if(lines[i].length === 0) continue
 
         jsonData.text.push(trimUntilLetter(lines[i]))
-        jsonData.audio.push(`./audio/${ind}.mp3`)
+        jsonData.audio.push(`./extr/audio/${ind}.mp3`)
 
         ind++
     }
