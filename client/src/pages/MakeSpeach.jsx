@@ -103,6 +103,7 @@ export function MakeSpeach() {
             <button className="btn-aud" onClick={() => clickBtnAud()} type="button">AUD</button>
         </div>
         {textArr.map((text, ind) => <div key={ind}>{text}</div>)}
+        <p className="p-end">---------- end ----------</p>
     </div>
   )
 }

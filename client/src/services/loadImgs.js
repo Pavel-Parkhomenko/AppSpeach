@@ -1,6 +1,6 @@
 const imageCache = new Map();
-// ПУСТОЙ MAP
-export const preloadImages = async (urls) => {
+
+export const preloadImages = async (urls, callback) => {
 
   await Promise.all(
     urls.map((url) => {
@@ -17,9 +17,12 @@ export const preloadImages = async (urls) => {
       });
     })
   );
+
+  callback(true)
+  console.log("Картинки загруженны")
 };
 
 export const getCachedImage = (url) => {
-  console.log(imageCache)
+  // console.log(url)
   return imageCache.get(url);
 }

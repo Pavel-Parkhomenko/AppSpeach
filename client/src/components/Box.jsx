@@ -22,12 +22,12 @@ const getBoxStyle = (level) => ({
 // })
 
 const getImg = (level, img) => {
-  console.log(getCachedImage(img)?.src)
+  if(!img || img?.trim() == '') return
   return {
-  backgroundImage: `url(${getCachedImage(img)?.src || ""})`,
-  backgroundSize: 'cover',
-  backgroundPosition: 'center',
-  borderColor: getDimmedColor(level),
+    backgroundImage: `url(${getCachedImage(img)?.src || ""})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    borderColor: getDimmedColor(level),
   }
 }
 

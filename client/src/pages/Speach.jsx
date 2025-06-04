@@ -4,6 +4,7 @@ import dataJson from "../extr/data.json"
 import ReactHowler from "react-howler";
 
 import { preloadImages } from '../services/loadImgs.js';
+import "../styles/Speach.css"
 
 export function Speach() {
     const [cnt, setCnt] = useState(0);
@@ -15,6 +16,8 @@ export function Speach() {
         img: "",
       },
     ]);
+
+    const [isLoadImgs, setIsLoadImgs] = useState(false)
   
     function getRandom() {
       return Math.floor(Math.random() * 5) + 3;
@@ -56,7 +59,14 @@ export function Speach() {
       imgs = [...imgs, imgs[imgs.length - 1], imgs[imgs.length - 1]]
       const audio = dataJson.audio
 
-      preloadImages(imgs).catch(console.error);
+      // alert("Для старта нажмите Enter")
+
+      preloadImages(imgs, setIsLoadImgs).catch(console.error);
+      document.addEventListener('keydown', (e) => {
+        if(e.key === "Enter") {
+          startApp()
+        }
+      });
   
       setImgs([...imgs])
       setText([...text])
@@ -119,19 +129,20 @@ export function Speach() {
     }
   
     return (
-      <div className="container">
-        <div>
-          <ReactHowler
-            src={playlist[trackIndex]}
-            playing={playing}
-            onEnd={handleEnd} 
-            html5={true}   
-        />
-        </div>
-        {addBox(boxs.length - 1)}
-        <button onClick={() => startApp()} style={{ marginTop: "150px" }}>
-          Start {playing ? "yes" : "no"}
-        </button>
+      <div className="container speach">
+        {!isLoadImgs ? (
+          <p>Картинки загружаются</p>
+        ) : (
+          <div>
+            <ReactHowler
+              src={playlist[trackIndex]}
+              playing={playing}
+              onEnd={handleEnd}
+              html5={true}
+            />
+            {addBox(boxs.length - 1)}
+          </div>
+        )}
       </div>
     );
-  }
+}

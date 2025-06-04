@@ -21,3 +21,7 @@ p {
 .btn-img, .btn-aud {
     width: 70px;
 }
+
+.p-end {
+    color: rgb(107, 9, 9);
+}
